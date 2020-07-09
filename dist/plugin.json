@@ -1,0 +1,21 @@
+{
+  "type": "panel",
+  "name": "ES Trajectory v6.6.2",
+  "id": "id-es-trajectory-version3-hashid-v6.6.2",
+  "dataFormats": ["table"],
+  "info": {
+    "description": "Trajectory using openlayers for elasticsearch Hash",
+    "author": {
+      "name": "Nam Le"
+    },
+    "keywords": ["openlayers", "trajectory", "elasticsearch"],
+    "screenshots": [],
+    "version": "0.0.1",
+    "updated": "2020-07-09"
+  },
+
+  "dependencies": {
+    "grafanaVersion": "6.4.x",
+    "plugins": []
+  }
+}
