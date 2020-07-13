@@ -96,7 +96,7 @@ export class MainPanel extends PureComponent<Props> {
       this.perDeviceTime = perDeviceTime;
       this.perDeviceUncertainty = perDeviceUncertainty;
       this.perDeviceFloor = perDeviceFloor;
-      this.setState({ ...this.state, options: Object.keys(this.perDeviceRoute), singlePointCount });
+      this.setState({ ...this.state, options: Object.keys(this.perDeviceRoute).sort(), singlePointCount });
     }
   }
 
@@ -119,7 +119,7 @@ export class MainPanel extends PureComponent<Props> {
         this.perDeviceTime = perDeviceTime;
         this.perDeviceUncertainty = perDeviceUncertainty;
         this.perDeviceFloor = perDeviceFloor;
-        this.setState({ ...this.state, options: Object.keys(this.perDeviceRoute), singlePointCount });
+        this.setState({ ...this.state, options: Object.keys(this.perDeviceRoute).sort(), singlePointCount });
       }
     }
 

@@ -52795,7 +52795,7 @@ function (_super) {
       this.perDeviceUncertainty = perDeviceUncertainty;
       this.perDeviceFloor = perDeviceFloor;
       this.setState(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.state), {
-        options: Object.keys(this.perDeviceRoute),
+        options: Object.keys(this.perDeviceRoute).sort(),
         singlePointCount: singlePointCount
       }));
     }
@@ -52830,7 +52830,7 @@ function (_super) {
         this.perDeviceUncertainty = perDeviceUncertainty;
         this.perDeviceFloor = perDeviceFloor;
         this.setState(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.state), {
-          options: Object.keys(this.perDeviceRoute),
+          options: Object.keys(this.perDeviceRoute).sort(),
           singlePointCount: singlePointCount
         }));
       }
