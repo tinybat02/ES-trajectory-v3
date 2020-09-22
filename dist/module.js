@@ -53128,16 +53128,16 @@ var processDataES = function processDataES(data) {
   var perDeviceUncertainty = {};
   var perDeviceFloor = {};
   data.map(function (datum) {
-    (perDeviceRoute[datum.hash_id] = perDeviceRoute[datum.hash_id] || []).push([datum.longitude, datum.latitude]);
-    (perDeviceTime[datum.hash_id] = perDeviceTime[datum.hash_id] || []).push(datum.timestamp);
-    (perDeviceUncertainty[datum.hash_id] = perDeviceUncertainty[datum.hash_id] || []).push(datum.uncertainty);
-    (perDeviceFloor[datum.hash_id] = perDeviceFloor[datum.hash_id] || []).push(datum.floor);
+    (perDeviceRoute[datum.device_aid] = perDeviceRoute[datum.device_aid] || []).push([datum.longitude, datum.latitude]);
+    (perDeviceTime[datum.device_aid] = perDeviceTime[datum.device_aid] || []).push(datum.timestamp);
+    (perDeviceUncertainty[datum.device_aid] = perDeviceUncertainty[datum.device_aid] || []).push(datum.uncertainty);
+    (perDeviceFloor[datum.device_aid] = perDeviceFloor[datum.device_aid] || []).push(datum.floor);
   });
   var perDeviceRoute_nonSinglePoint = {};
   var singlePointCount = 0;
-  Object.keys(perDeviceRoute).map(function (hash_id) {
-    if (perDeviceRoute[hash_id].length > 1) {
-      perDeviceRoute_nonSinglePoint[hash_id] = perDeviceRoute[hash_id];
+  Object.keys(perDeviceRoute).map(function (device_aid) {
+    if (perDeviceRoute[device_aid].length > 1) {
+      perDeviceRoute_nonSinglePoint[device_aid] = perDeviceRoute[device_aid];
     } else {
       singlePointCount++;
     }
