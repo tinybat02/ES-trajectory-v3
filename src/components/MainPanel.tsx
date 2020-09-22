@@ -282,7 +282,8 @@ export class MainPanel extends PureComponent<Props> {
         }}
       >
         <div className="tool-bar">
-          <div>
+          <div className="tool-content">
+            <div></div>
             <select id="selector" style={{ width: 350 }} onChange={this.handleSelector} value={current}>
               <option value="None">None</option>
               {options.map(item => (
