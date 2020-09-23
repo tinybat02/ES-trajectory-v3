@@ -53168,7 +53168,7 @@ var processDataES = function processDataES(data) {
   });
   return {
     perDeviceRoute: perDeviceRoute_nonSinglePoint,
-    perDeviceTime: perDeviceTime,
+    perDeviceTime: perDeviceTime_nonSinglePoint,
     perDeviceUncertainty: perDeviceUncertainty,
     singlePointCount: singlePointCount,
     perDeviceFloor: perDeviceFloor,

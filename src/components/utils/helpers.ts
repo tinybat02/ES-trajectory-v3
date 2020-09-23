@@ -52,7 +52,7 @@ export const processDataES = (data: SingleData[]) => {
 
   return {
     perDeviceRoute: perDeviceRoute_nonSinglePoint,
-    perDeviceTime,
+    perDeviceTime: perDeviceTime_nonSinglePoint,
     perDeviceUncertainty,
     singlePointCount,
     perDeviceFloor,
