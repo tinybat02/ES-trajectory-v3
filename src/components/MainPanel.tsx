@@ -89,14 +89,23 @@ export class MainPanel extends PureComponent<Props> {
 
     if (this.props.data.series.length > 0) {
       const { buffer } = this.props.data.series[0].fields[0].values as Buffer;
-      const { perDeviceRoute, perDeviceTime, perDeviceUncertainty, singlePointCount, perDeviceFloor } = processDataES(
-        buffer
-      );
+      const {
+        perDeviceRoute,
+        perDeviceTime,
+        perDeviceUncertainty,
+        singlePointCount,
+        perDeviceFloor,
+        selectList,
+      } = processDataES(buffer);
       this.perDeviceRoute = perDeviceRoute;
       this.perDeviceTime = perDeviceTime;
       this.perDeviceUncertainty = perDeviceUncertainty;
       this.perDeviceFloor = perDeviceFloor;
-      this.setState({ ...this.state, options: Object.keys(this.perDeviceRoute).sort(), singlePointCount });
+      this.setState({
+        ...this.state,
+        options: selectList /* Object.keys(this.perDeviceRoute).sort() */,
+        singlePointCount,
+      });
     }
   }
 
@@ -112,14 +121,23 @@ export class MainPanel extends PureComponent<Props> {
 
       const { buffer } = this.props.data.series[0].fields[0].values as Buffer;
       if (buffer.length !== 0) {
-        const { perDeviceRoute, perDeviceTime, perDeviceUncertainty, singlePointCount, perDeviceFloor } = processDataES(
-          buffer
-        );
+        const {
+          perDeviceRoute,
+          perDeviceTime,
+          perDeviceUncertainty,
+          singlePointCount,
+          perDeviceFloor,
+          selectList,
+        } = processDataES(buffer);
         this.perDeviceRoute = perDeviceRoute;
         this.perDeviceTime = perDeviceTime;
         this.perDeviceUncertainty = perDeviceUncertainty;
         this.perDeviceFloor = perDeviceFloor;
-        this.setState({ ...this.state, options: Object.keys(this.perDeviceRoute).sort(), singlePointCount });
+        this.setState({
+          ...this.state,
+          options: selectList /* Object.keys(this.perDeviceRoute).sort() */,
+          singlePointCount,
+        });
       }
     }
 
@@ -283,49 +301,52 @@ export class MainPanel extends PureComponent<Props> {
       >
         <div className="tool-bar">
           <div className="tool-content">
-            <div></div>
-            <select id="selector" style={{ width: 350 }} onChange={this.handleSelector} value={current}>
-              <option value="None">None</option>
-              {options.map(item => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-            {current !== 'None' && (
-              <>
-                <button
-                  className="custom-btn"
-                  onClick={this.handleIterRoute('previous')}
-                  disabled={showTotalRoute}
-                  style={{ backgroundColor: showTotalRoute ? '#ccc' : '#326666' }}
-                >
-                  &#60;&#60;
-                </button>
-                <button
-                  className="custom-btn"
-                  onClick={this.handleIterRoute('next')}
-                  disabled={showTotalRoute}
-                  style={{ backgroundColor: showTotalRoute ? '#ccc' : '#326666' }}
-                >
-                  &#62;&#62;
-                </button>
-                <button className="custom-btn" onClick={this.handleShowTotalRoute}>
-                  {showTotalRoute ? 'Show Single' : 'Show Total'} Route
-                </button>
-                {this.perDeviceTime[current] && (
-                  <span style={{ marginLeft: 10 }}>
-                    {`${iterRoute + 1} / ${routeLength - 1} -- Begin: ${new Date(this.perDeviceTime[current][0] * 1000)
-                      .toLocaleString('de-DE')
-                      .replace(/\./g, '/')} -- End: ${new Date(
-                      this.perDeviceTime[current][this.perDeviceTime[current].length - 1] * 1000
-                    )
-                      .toLocaleString('de-DE')
-                      .replace(/\./g, '/')}`}
-                  </span>
-                )}
-              </>
-            )}
+            <div>
+              <select id="selector" style={{ width: 350 }} onChange={this.handleSelector} value={current}>
+                <option value="None">None</option>
+                {options.map(item => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+              {current !== 'None' && (
+                <>
+                  <button
+                    className="custom-btn"
+                    onClick={this.handleIterRoute('previous')}
+                    disabled={showTotalRoute}
+                    style={{ backgroundColor: showTotalRoute ? '#ccc' : '#326666' }}
+                  >
+                    &#60;&#60;
+                  </button>
+                  <button
+                    className="custom-btn"
+                    onClick={this.handleIterRoute('next')}
+                    disabled={showTotalRoute}
+                    style={{ backgroundColor: showTotalRoute ? '#ccc' : '#326666' }}
+                  >
+                    &#62;&#62;
+                  </button>
+                  <button className="custom-btn" onClick={this.handleShowTotalRoute}>
+                    {showTotalRoute ? 'Show Single' : 'Show Total'} Route
+                  </button>
+                </>
+              )}
+            </div>
+            <div>
+              {current !== 'None' && this.perDeviceTime[current] && (
+                <span style={{ marginLeft: 10 }}>
+                  {`${iterRoute + 1} / ${routeLength - 1} -- Begin: ${new Date(this.perDeviceTime[current][0] * 1000)
+                    .toLocaleString('de-DE')
+                    .replace(/\./g, '/')} -- End: ${new Date(
+                    this.perDeviceTime[current][this.perDeviceTime[current].length - 1] * 1000
+                  )
+                    .toLocaleString('de-DE')
+                    .replace(/\./g, '/')}`}
+                </span>
+              )}
+            </div>
           </div>
           <div>Data with 1 : {singlePointCount}</div>
         </div>

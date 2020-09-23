@@ -52788,14 +52788,17 @@ function (_super) {
           perDeviceTime = _b.perDeviceTime,
           perDeviceUncertainty = _b.perDeviceUncertainty,
           singlePointCount = _b.singlePointCount,
-          perDeviceFloor = _b.perDeviceFloor;
+          perDeviceFloor = _b.perDeviceFloor,
+          selectList = _b.selectList;
 
       this.perDeviceRoute = perDeviceRoute;
       this.perDeviceTime = perDeviceTime;
       this.perDeviceUncertainty = perDeviceUncertainty;
       this.perDeviceFloor = perDeviceFloor;
       this.setState(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.state), {
-        options: Object.keys(this.perDeviceRoute).sort(),
+        options: selectList
+        /* Object.keys(this.perDeviceRoute).sort() */
+        ,
         singlePointCount: singlePointCount
       }));
     }
@@ -52823,14 +52826,17 @@ function (_super) {
             perDeviceTime = _a.perDeviceTime,
             perDeviceUncertainty = _a.perDeviceUncertainty,
             singlePointCount = _a.singlePointCount,
-            perDeviceFloor = _a.perDeviceFloor;
+            perDeviceFloor = _a.perDeviceFloor,
+            selectList = _a.selectList;
 
         this.perDeviceRoute = perDeviceRoute;
         this.perDeviceTime = perDeviceTime;
         this.perDeviceUncertainty = perDeviceUncertainty;
         this.perDeviceFloor = perDeviceFloor;
         this.setState(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.state), {
-          options: Object.keys(this.perDeviceRoute).sort(),
+          options: selectList
+          /* Object.keys(this.perDeviceRoute).sort() */
+          ,
           singlePointCount: singlePointCount
         }));
       }
@@ -52957,7 +52963,7 @@ function (_super) {
       className: "tool-bar"
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
       className: "tool-content"
-    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("select", {
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("select", {
       id: "selector",
       style: {
         width: 350
@@ -52988,7 +52994,7 @@ function (_super) {
     }, ">>"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
       className: "custom-btn",
       onClick: this.handleShowTotalRoute
-    }, showTotalRoute ? 'Show Single' : 'Show Total', " Route"), this.perDeviceTime[current] && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+    }, showTotalRoute ? 'Show Single' : 'Show Total', " Route"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, current !== 'None' && this.perDeviceTime[current] && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
       style: {
         marginLeft: 10
       }
@@ -53136,6 +53142,8 @@ var processDataES = function processDataES(data) {
     (perDeviceFloor[datum.hash_id] = perDeviceFloor[datum.hash_id] || []).push(datum.floor);
   });
   var perDeviceRoute_nonSinglePoint = {};
+  var perDeviceTime_nonSinglePoint = {};
+  var perDeviceTime_array = [];
   var singlePointCount = 0;
   Object.keys(perDeviceRoute).map(function (hash_id) {
     if (perDeviceRoute[hash_id].length > 1) {
@@ -53144,12 +53152,29 @@ var processDataES = function processDataES(data) {
       singlePointCount++;
     }
   });
+  Object.keys(perDeviceTime).map(function (hash_id) {
+    if (perDeviceTime[hash_id].length > 1) {
+      perDeviceTime_nonSinglePoint[hash_id] = perDeviceTime[hash_id];
+      perDeviceTime_array.push({
+        hash_id: hash_id,
+        duration: perDeviceTime[hash_id].slice(-1)[0] - perDeviceTime[hash_id][0]
+      });
+    }
+  });
+  perDeviceTime_array.sort(function (a, b) {
+    if (a.duration > b.duration) return -1;
+    if (a.duration < b.duration) return 1;
+    return 0;
+  });
   return {
     perDeviceRoute: perDeviceRoute_nonSinglePoint,
     perDeviceTime: perDeviceTime,
     perDeviceUncertainty: perDeviceUncertainty,
     singlePointCount: singlePointCount,
-    perDeviceFloor: perDeviceFloor
+    perDeviceFloor: perDeviceFloor,
+    selectList: perDeviceTime_array.map(function (elm) {
+      return elm.hash_id;
+    })
   };
 };
 var createLine = function createLine(routeData, iterRoute, floorData) {

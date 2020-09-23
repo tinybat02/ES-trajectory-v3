@@ -26,6 +26,8 @@ export const processDataES = (data: SingleData[]) => {
     (perDeviceFloor[datum.hash_id] = perDeviceFloor[datum.hash_id] || []).push(datum.floor);
   });
   const perDeviceRoute_nonSinglePoint: { [key: string]: [number, number][] } = {};
+  const perDeviceTime_nonSinglePoint: { [key: string]: number[] } = {};
+  const perDeviceTime_array: { hash_id: string; duration: number }[] = [];
   let singlePointCount = 0;
   Object.keys(perDeviceRoute).map(hash_id => {
     if (perDeviceRoute[hash_id].length > 1) {
@@ -34,12 +36,27 @@ export const processDataES = (data: SingleData[]) => {
       singlePointCount++;
     }
   });
+
+  Object.keys(perDeviceTime).map(hash_id => {
+    if (perDeviceTime[hash_id].length > 1) {
+      perDeviceTime_nonSinglePoint[hash_id] = perDeviceTime[hash_id];
+      perDeviceTime_array.push({ hash_id, duration: perDeviceTime[hash_id].slice(-1)[0] - perDeviceTime[hash_id][0] });
+    }
+  });
+
+  perDeviceTime_array.sort((a, b) => {
+    if (a.duration > b.duration) return -1;
+    if (a.duration < b.duration) return 1;
+    return 0;
+  });
+
   return {
     perDeviceRoute: perDeviceRoute_nonSinglePoint,
     perDeviceTime,
     perDeviceUncertainty,
     singlePointCount,
     perDeviceFloor,
+    selectList: perDeviceTime_array.map(elm => elm.hash_id),
   };
 };
 
