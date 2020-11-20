@@ -64,11 +64,11 @@ export const createLine = (routeData: Coordinate[], iterRoute: number, floorData
   let color = 'rgba(73,168,222)';
   let pic = Arrow;
 
-  if (floorData[iterRoute] == -1) {
+  if (floorData[iterRoute] == 1) {
     color = 'rgba(255,176,0)';
   }
 
-  if (floorData[iterRoute + 1] == -1) {
+  if (floorData[iterRoute + 1] == 1) {
     pic = Arrow1;
   }
 
@@ -106,11 +106,11 @@ export const createLineWithLabel = (
   let color = 'rgba(73,168,222)';
   let pic = Arrow;
 
-  if (floorData[iterRoute] == -1) {
+  if (floorData[iterRoute] == 1) {
     color = 'rgba(255,176,0)';
   }
 
-  if (floorData[iterRoute + 1] == -1) {
+  if (floorData[iterRoute + 1] == 1) {
     pic = Arrow1;
   }
 
@@ -155,7 +155,7 @@ export const createPoint = (
 ) => {
   let color = 'rgba(73,168,222,0.6)';
 
-  if (floorData[iterRoute] == -1) {
+  if (floorData[iterRoute] == 1) {
     color = 'rgba(255,176,0,0.6)';
   }
 

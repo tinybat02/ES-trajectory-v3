@@ -53181,11 +53181,11 @@ var createLine = function createLine(routeData, iterRoute, floorData) {
   var color = 'rgba(73,168,222)';
   var pic = _img_arrow_png__WEBPACK_IMPORTED_MODULE_4___default.a;
 
-  if (floorData[iterRoute] == -1) {
+  if (floorData[iterRoute] == 1) {
     color = 'rgba(255,176,0)';
   }
 
-  if (floorData[iterRoute + 1] == -1) {
+  if (floorData[iterRoute + 1] == 1) {
     pic = _img_arrow1_png__WEBPACK_IMPORTED_MODULE_5___default.a;
   }
 
@@ -53214,11 +53214,11 @@ var createLineWithLabel = function createLineWithLabel(routeData, timeData, iter
   var color = 'rgba(73,168,222)';
   var pic = _img_arrow_png__WEBPACK_IMPORTED_MODULE_4___default.a;
 
-  if (floorData[iterRoute] == -1) {
+  if (floorData[iterRoute] == 1) {
     color = 'rgba(255,176,0)';
   }
 
-  if (floorData[iterRoute + 1] == -1) {
+  if (floorData[iterRoute + 1] == 1) {
     pic = _img_arrow1_png__WEBPACK_IMPORTED_MODULE_5___default.a;
   }
 
@@ -53254,7 +53254,7 @@ var createLineWithLabel = function createLineWithLabel(routeData, timeData, iter
 var createPoint = function createPoint(routeData, routeRadiusData, iterRoute, floorData) {
   var color = 'rgba(73,168,222,0.6)';
 
-  if (floorData[iterRoute] == -1) {
+  if (floorData[iterRoute] == 1) {
     color = 'rgba(255,176,0,0.6)';
   }
 
