@@ -16,6 +16,7 @@ interface SingleData {
 export const processDataES = (data: SingleData[]) => {
   data.reverse();
   const perDeviceRoute: { [key: string]: [number, number][] } = {};
+  const perDeviceVendor: { [key: string]: string } = {};
   const perDeviceTime: { [key: string]: number[] } = {};
   const perDeviceUncertainty: { [key: string]: number[] } = {};
   const perDeviceFloor: { [key: string]: number[] } = {};
@@ -24,6 +25,7 @@ export const processDataES = (data: SingleData[]) => {
     (perDeviceTime[datum.hash_id] = perDeviceTime[datum.hash_id] || []).push(datum.timestamp);
     (perDeviceUncertainty[datum.hash_id] = perDeviceUncertainty[datum.hash_id] || []).push(datum.uncertainty);
     (perDeviceFloor[datum.hash_id] = perDeviceFloor[datum.hash_id] || []).push(datum.floor);
+    if (!perDeviceVendor[datum.hash_id]) perDeviceVendor[datum.hash_id] = datum.vendor;
   });
   const perDeviceRoute_nonSinglePoint: { [key: string]: [number, number][] } = {};
   const perDeviceTime_nonSinglePoint: { [key: string]: number[] } = {};
@@ -53,6 +55,7 @@ export const processDataES = (data: SingleData[]) => {
   return {
     perDeviceRoute: perDeviceRoute_nonSinglePoint,
     perDeviceTime: perDeviceTime_nonSinglePoint,
+    perDeviceVendor,
     perDeviceUncertainty,
     singlePointCount,
     perDeviceFloor,

@@ -38,6 +38,7 @@ export class MainPanel extends PureComponent<Props> {
   perDeviceTime: { [key: string]: number[] };
   perDeviceUncertainty: { [key: string]: number[] };
   perDeviceFloor: { [key: string]: number[] };
+  perDeviceVendor: { [key: string]: string } = {};
   partialRoute: VectorLayer;
   totalRoute: VectorLayer;
 
@@ -95,12 +96,14 @@ export class MainPanel extends PureComponent<Props> {
         perDeviceUncertainty,
         singlePointCount,
         perDeviceFloor,
+        perDeviceVendor,
         selectList,
       } = processDataES(buffer);
       this.perDeviceRoute = perDeviceRoute;
       this.perDeviceTime = perDeviceTime;
       this.perDeviceUncertainty = perDeviceUncertainty;
       this.perDeviceFloor = perDeviceFloor;
+      this.perDeviceVendor = perDeviceVendor;
       this.setState({
         ...this.state,
         options: selectList /* Object.keys(this.perDeviceRoute).sort() */,
@@ -127,12 +130,14 @@ export class MainPanel extends PureComponent<Props> {
           perDeviceUncertainty,
           singlePointCount,
           perDeviceFloor,
+          perDeviceVendor,
           selectList,
         } = processDataES(buffer);
         this.perDeviceRoute = perDeviceRoute;
         this.perDeviceTime = perDeviceTime;
         this.perDeviceUncertainty = perDeviceUncertainty;
         this.perDeviceFloor = perDeviceFloor;
+        this.perDeviceVendor = perDeviceVendor;
         this.setState({
           ...this.state,
           options: selectList /* Object.keys(this.perDeviceRoute).sort() */,
@@ -306,7 +311,7 @@ export class MainPanel extends PureComponent<Props> {
                 <option value="None">None</option>
                 {options.map(item => (
                   <option key={item} value={item}>
-                    {item}
+                    {`${item} - ${this.perDeviceVendor[item]}`}
                   </option>
                 ))}
               </select>

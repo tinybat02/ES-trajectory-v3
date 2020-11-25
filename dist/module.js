@@ -52661,6 +52661,7 @@ function (_super) {
     var _this = _super !== null && _super.apply(this, arguments) || this;
 
     _this.id = 'id' + nanoid__WEBPACK_IMPORTED_MODULE_9___default()();
+    _this.perDeviceVendor = {};
     _this.state = {
       options: [],
       current: 'None',
@@ -52789,12 +52790,14 @@ function (_super) {
           perDeviceUncertainty = _b.perDeviceUncertainty,
           singlePointCount = _b.singlePointCount,
           perDeviceFloor = _b.perDeviceFloor,
+          perDeviceVendor = _b.perDeviceVendor,
           selectList = _b.selectList;
 
       this.perDeviceRoute = perDeviceRoute;
       this.perDeviceTime = perDeviceTime;
       this.perDeviceUncertainty = perDeviceUncertainty;
       this.perDeviceFloor = perDeviceFloor;
+      this.perDeviceVendor = perDeviceVendor;
       this.setState(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.state), {
         options: selectList
         /* Object.keys(this.perDeviceRoute).sort() */
@@ -52827,12 +52830,14 @@ function (_super) {
             perDeviceUncertainty = _a.perDeviceUncertainty,
             singlePointCount = _a.singlePointCount,
             perDeviceFloor = _a.perDeviceFloor,
+            perDeviceVendor = _a.perDeviceVendor,
             selectList = _a.selectList;
 
         this.perDeviceRoute = perDeviceRoute;
         this.perDeviceTime = perDeviceTime;
         this.perDeviceUncertainty = perDeviceUncertainty;
         this.perDeviceFloor = perDeviceFloor;
+        this.perDeviceVendor = perDeviceVendor;
         this.setState(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.state), {
           options: selectList
           /* Object.keys(this.perDeviceRoute).sort() */
@@ -52944,6 +52949,8 @@ function (_super) {
   };
 
   MainPanel.prototype.render = function () {
+    var _this = this;
+
     var _a = this.props,
         width = _a.width,
         height = _a.height;
@@ -52976,7 +52983,7 @@ function (_super) {
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("option", {
         key: item,
         value: item
-      }, item);
+      }, item + " - " + _this.perDeviceVendor[item]);
     })), current !== 'None' && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
       className: "custom-btn",
       onClick: this.handleIterRoute('previous'),
@@ -53132,6 +53139,7 @@ __webpack_require__.r(__webpack_exports__);
 var processDataES = function processDataES(data) {
   data.reverse();
   var perDeviceRoute = {};
+  var perDeviceVendor = {};
   var perDeviceTime = {};
   var perDeviceUncertainty = {};
   var perDeviceFloor = {};
@@ -53140,6 +53148,7 @@ var processDataES = function processDataES(data) {
     (perDeviceTime[datum.hash_id] = perDeviceTime[datum.hash_id] || []).push(datum.timestamp);
     (perDeviceUncertainty[datum.hash_id] = perDeviceUncertainty[datum.hash_id] || []).push(datum.uncertainty);
     (perDeviceFloor[datum.hash_id] = perDeviceFloor[datum.hash_id] || []).push(datum.floor);
+    if (!perDeviceVendor[datum.hash_id]) perDeviceVendor[datum.hash_id] = datum.vendor;
   });
   var perDeviceRoute_nonSinglePoint = {};
   var perDeviceTime_nonSinglePoint = {};
@@ -53169,6 +53178,7 @@ var processDataES = function processDataES(data) {
   return {
     perDeviceRoute: perDeviceRoute_nonSinglePoint,
     perDeviceTime: perDeviceTime_nonSinglePoint,
+    perDeviceVendor: perDeviceVendor,
     perDeviceUncertainty: perDeviceUncertainty,
     singlePointCount: singlePointCount,
     perDeviceFloor: perDeviceFloor,
