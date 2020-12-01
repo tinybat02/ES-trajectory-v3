@@ -13,6 +13,7 @@ import { defaults, DragPan, MouseWheelZoom } from 'ol/interaction';
 import { platformModifierKeyOnly } from 'ol/events/condition';
 import nanoid from 'nanoid';
 import { processDataES, createLine, createPoint, createLineWithLabel } from './utils/helpers';
+import { CustomSlider } from './common/CustomSlider';
 import 'ol/ol.css';
 import '../style/MainPanel.css';
 
@@ -293,9 +294,35 @@ export class MainPanel extends PureComponent<Props> {
     }
   };
 
+  onSliding = (value: number) => {
+    this.setState({ iterRoute: value });
+  };
+
+  onSlider = (value: number) => {
+    this.map.removeLayer(this.partialRoute);
+    // this.setState({ iterRoute: value });
+
+    const routeData = this.perDeviceRoute[this.state.current].map(coordinate => fromLonLat(coordinate));
+    const timeData = this.perDeviceTime[this.state.current];
+    const uncertaintyData = this.perDeviceUncertainty[this.state.current];
+    const floorData = this.perDeviceFloor[this.state.current];
+
+    const lineFeature = createLineWithLabel(routeData, timeData, value, floorData);
+    const beginPoint = createPoint(routeData, uncertaintyData, value, floorData);
+    const endPoint = createPoint(routeData, uncertaintyData, value + 1, floorData);
+
+    this.partialRoute = new VectorLayer({
+      source: new VectorSource({
+        features: [lineFeature, beginPoint, endPoint],
+      }),
+      zIndex: 2,
+    });
+    this.map.addLayer(this.partialRoute);
+  };
+
   render() {
     const { width, height } = this.props;
-    const { options, current, iterRoute, routeLength, showTotalRoute, singlePointCount } = this.state;
+    const { options, current, iterRoute, routeLength, showTotalRoute } = this.state;
 
     return (
       <div
@@ -306,7 +333,7 @@ export class MainPanel extends PureComponent<Props> {
       >
         <div className="tool-bar">
           <div className="tool-content">
-            <div>
+            <div style={{ width: 450 }}>
               <select id="selector" style={{ width: 350 }} onChange={this.handleSelector} value={current}>
                 <option value="None">None</option>
                 {options.map(item => (
@@ -316,7 +343,7 @@ export class MainPanel extends PureComponent<Props> {
                 ))}
               </select>
               {current !== 'None' && (
-                <>
+                <div>
                   <button
                     className="custom-btn"
                     onClick={this.handleIterRoute('previous')}
@@ -336,24 +363,33 @@ export class MainPanel extends PureComponent<Props> {
                   <button className="custom-btn" onClick={this.handleShowTotalRoute}>
                     {showTotalRoute ? 'Show Single' : 'Show Total'} Route
                   </button>
-                </>
+                </div>
               )}
             </div>
             <div>
               {current !== 'None' && this.perDeviceTime[current] && (
                 <span style={{ marginLeft: 10 }}>
-                  {`${iterRoute + 1} / ${routeLength - 1} -- Begin: ${new Date(this.perDeviceTime[current][0] * 1000)
-                    .toLocaleString('de-DE')
-                    .replace(/\./g, '/')} -- End: ${new Date(
-                    this.perDeviceTime[current][this.perDeviceTime[current].length - 1] * 1000
+                  {`${iterRoute + 1} / ${routeLength - 1} -- Begin: ${new Date(
+                    this.perDeviceTime[current][iterRoute] * 1000
                   )
+                    .toLocaleString('de-DE')
+                    .replace(/\./g, '/')} -- End: ${new Date(this.perDeviceTime[current][iterRoute + 1] * 1000)
                     .toLocaleString('de-DE')
                     .replace(/\./g, '/')}`}
                 </span>
               )}
             </div>
           </div>
-          <div>Data with 1 : {singlePointCount}</div>
+          <div style={{ width: '100%', padding: 10, marginRight: 10 }}>
+            {!showTotalRoute && (
+              <CustomSlider
+                initialValue={0}
+                onSliding={this.onSliding}
+                onSlider={this.onSlider}
+                upperDomain={routeLength - 2}
+              />
+            )}
+          </div>
         </div>
         <div
           id={this.id}
