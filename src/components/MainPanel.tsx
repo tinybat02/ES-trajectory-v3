@@ -395,7 +395,7 @@ export class MainPanel extends PureComponent<Props> {
           id={this.id}
           style={{
             width,
-            height: height - 40,
+            height: height - 60,
           }}
         ></div>
       </div>

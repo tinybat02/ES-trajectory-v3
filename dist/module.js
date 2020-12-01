@@ -56649,7 +56649,7 @@ function (_super) {
       id: this.id,
       style: {
         width: width,
-        height: height - 40
+        height: height - 60
       }
     }));
   };
