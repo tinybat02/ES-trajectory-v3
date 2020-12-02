@@ -351,7 +351,7 @@ export class MainPanel extends PureComponent<Props> {
                 <div style={{ width: 400, marginLeft: 10 }}>
                   <ReactSearchBox
                     placeholder="Search ..."
-                    data={options.map(hash => ({ key: hash, value: hash }))}
+                    data={options.map(hash => ({ key: hash, value: `${hash} - ${this.perDeviceVendor[hash]}` }))}
                     onSelect={this.handleSearch}
                     fuseConfigs={{ threshold: 0.05 }}
                     value={current == 'None' ? '' : current}

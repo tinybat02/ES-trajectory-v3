@@ -61822,7 +61822,7 @@ function (_super) {
       data: options.map(function (hash) {
         return {
           key: hash,
-          value: hash
+          value: hash + " - " + _this.perDeviceVendor[hash]
         };
       }),
       onSelect: this.handleSearch,
