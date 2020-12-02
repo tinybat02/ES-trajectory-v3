@@ -61791,7 +61791,7 @@ function (_super) {
       className: "tool-content"
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
       style: {
-        width: 500
+        width: 600
       }
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
       style: {
@@ -61814,7 +61814,7 @@ function (_super) {
       }, item + " - " + _this.perDeviceVendor[item]);
     })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
       style: {
-        width: 400,
+        width: 350,
         marginLeft: 10
       }
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_search_box__WEBPACK_IMPORTED_MODULE_12__["default"], {

@@ -338,7 +338,7 @@ export class MainPanel extends PureComponent<Props> {
       >
         <div className="tool-bar">
           <div className="tool-content">
-            <div style={{ width: 500 }}>
+            <div style={{ width: 600 }}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <select id="selector" style={{ width: 350 }} onChange={this.handleSelector} value={current}>
                   <option value="None">None</option>
@@ -348,7 +348,7 @@ export class MainPanel extends PureComponent<Props> {
                     </option>
                   ))}
                 </select>
-                <div style={{ width: 400, marginLeft: 10 }}>
+                <div style={{ width: 350, marginLeft: 10 }}>
                   <ReactSearchBox
                     placeholder="Search ..."
                     data={options.map(hash => ({ key: hash, value: `${hash} - ${this.perDeviceVendor[hash]}` }))}
