@@ -14,6 +14,7 @@ import { platformModifierKeyOnly } from 'ol/events/condition';
 import nanoid from 'nanoid';
 import { processDataES, createLine, createPoint, createLineWithLabel } from './utils/helpers';
 import { CustomSlider } from './common/CustomSlider';
+import ReactSearchBox from 'react-search-box';
 import 'ol/ol.css';
 import '../style/MainPanel.css';
 
@@ -180,7 +181,7 @@ export class MainPanel extends PureComponent<Props> {
       this.map.removeLayer(this.partialRoute);
       this.map.removeLayer(this.totalRoute);
 
-      this.setState({ iterRoute: 0, routeLength: 0 });
+      this.setState({ iterRoute: 0, routeLength: 0, showTotalRoute: true });
 
       if (this.state.current !== 'None') {
         const routeData = this.perDeviceRoute[this.state.current].map(coordinate => fromLonLat(coordinate));
@@ -320,6 +321,10 @@ export class MainPanel extends PureComponent<Props> {
     this.map.addLayer(this.partialRoute);
   };
 
+  handleSearch = (record: { key: string; value: string }) => {
+    this.setState({ current: record.key });
+  };
+
   render() {
     const { width, height } = this.props;
     const { options, current, iterRoute, routeLength, showTotalRoute } = this.state;
@@ -333,15 +338,26 @@ export class MainPanel extends PureComponent<Props> {
       >
         <div className="tool-bar">
           <div className="tool-content">
-            <div style={{ width: 450 }}>
-              <select id="selector" style={{ width: 350 }} onChange={this.handleSelector} value={current}>
-                <option value="None">None</option>
-                {options.map(item => (
-                  <option key={item} value={item}>
-                    {`${item} - ${this.perDeviceVendor[item]}`}
-                  </option>
-                ))}
-              </select>
+            <div style={{ width: 500 }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <select id="selector" style={{ width: 350 }} onChange={this.handleSelector} value={current}>
+                  <option value="None">None</option>
+                  {options.map(item => (
+                    <option key={item} value={item}>
+                      {`${item} - ${this.perDeviceVendor[item]}`}
+                    </option>
+                  ))}
+                </select>
+                <div style={{ width: 400, marginLeft: 10 }}>
+                  <ReactSearchBox
+                    placeholder="Search ..."
+                    data={options.map(hash => ({ key: hash, value: hash }))}
+                    onSelect={this.handleSearch}
+                    fuseConfigs={{ threshold: 0.05 }}
+                    value={current == 'None' ? '' : current}
+                  />
+                </div>
+              </div>
               {current !== 'None' && (
                 <div>
                   <button
