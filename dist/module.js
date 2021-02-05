@@ -61851,7 +61851,7 @@ function (_super) {
       style: {
         marginLeft: 10
       }
-    }, this.perDeviceVendor[current] + " " + (iterRoute + 1) + " / " + (routeLength - 1) + " -- Begin: " + new Date(this.perDeviceTime[current][iterRoute] * 1000).toLocaleString('de-DE').replace(/\./g, '/') + " -- End: " + new Date(this.perDeviceTime[current][iterRoute + 1] * 1000).toLocaleString('de-DE').replace(/\./g, '/')))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    }, current + " " + (iterRoute + 1) + " / " + (routeLength - 1) + " -- Begin: " + new Date(this.perDeviceTime[current][iterRoute] * 1000).toLocaleString('de-DE').replace(/\./g, '/') + " -- End: " + new Date(this.perDeviceTime[current][iterRoute + 1] * 1000).toLocaleString('de-DE').replace(/\./g, '/')))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
       style: {
         width: '100%',
         padding: 10,
