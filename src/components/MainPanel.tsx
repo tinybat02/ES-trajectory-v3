@@ -385,7 +385,7 @@ export class MainPanel extends PureComponent<Props> {
             <div>
               {current !== 'None' && this.perDeviceTime[current] && (
                 <span style={{ marginLeft: 10 }}>
-                  {`${iterRoute + 1} / ${routeLength - 1} -- Begin: ${new Date(
+                  {`${this.perDeviceVendor[current]} ${iterRoute + 1} / ${routeLength - 1} -- Begin: ${new Date(
                     this.perDeviceTime[current][iterRoute] * 1000
                   )
                     .toLocaleString('de-DE')
